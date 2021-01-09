@@ -11,16 +11,14 @@ import Foundation
 // view model should be seperated from domain model
 public class RentalProperty: ObservableObject {
     
-    @Published var purchasePrice = 120.0;
-    @Published var loanAmt = 0.0;
+    @Published var purchasePrice: Double = 200000.0;
+    @Published var loanAmt = 160000.0;
     @Published var interestRate = 5.0;
     @Published var numOfTerms = 30;
     @Published var escrow = 0.0;
     @Published var extra = 0.0;
     @Published var expenses = 0.0;
     @Published var rent = 0.0;
-    
-//    @Published var inputText: String = "xxx"
     
     var textNumOfTerms: String {
         get {
@@ -43,47 +41,46 @@ public class RentalProperty: ObservableObject {
     
     /////////////////////////////////////////////
     
-    // private RentalProperty() {
     private init() {
         // Commented Java code ommitted
     }
     
-    // public static RentalProperty sharedInstance() {
     class func sharedInstance() -> RentalProperty {
         return MyStatic._sharedInstance
     }
     
-    // public String getAmortizationPersistentKey() {
     func getAmortizationPersistentKey() -> String {
         let aKey = String(format: "%.2f-%.3f-%d-%.2f-%.2f", self.loanAmt, self.interestRate, self.numOfTerms, self.escrow, self.extra);
         return aKey;
     }
     
-    // public JSONArray getSavedAmortization(Context activity) {
-    func getSavedAmortization() -> NSArray? {
-        let savedKey = retrieveUserdefault(key: MyStatic.KEY_AMO_SAVED) as! String?
+    func getSavedAmortization() -> [PaymentScheduleDto]? {
+        let savedKey: String? = retrieveUserdefault(key: MyStatic.KEY_AMO_SAVED) as? String
         let aKey = self.getAmortizationPersistentKey()
         if let str = savedKey {
-            if(str.utf16.count > 0 && str == aKey) {
-                let jo = retrieveUserdefault(key: str) as! NSArray?
-                return jo
+            if(str.count > 0 && str == aKey) {
+                let data: Data? = retrieveUserdefault(key: str) as? Data
+                if let data = data {
+                    if let jo = try? JSONDecoder().decode([PaymentScheduleDto].self, from: data) {
+                        return jo
+                    }
+                }
             }
         }
         return nil
     }
     
-    // public boolean saveAmortization(String data, Context activity){
-    func saveAmortization(data: NSArray) -> Bool {
+    func saveAmortization<T:Encodable>(_ object: [T]) {
         let aKey = self.getAmortizationPersistentKey()
         if saveUserdefault(data: aKey, forKey: MyStatic.KEY_AMO_SAVED) {
-            return saveUserdefault(data: data, forKey: aKey)
-        } else {
-            return false
+            if let data = try? JSONEncoder().encode(object) {
+                _ = saveUserdefault(data: data, forKey: aKey)
+            }
         }
     }
     
     // public boolean load(Context activity) {
-    func load() -> Bool {
+    func load() {
         let data = retrieveUserdefault(key: MyStatic.KEY_PROPERTY) as! NSDictionary?
         if let jo = data {
             self.purchasePrice = jo["purchasePrice"] as! Double
@@ -94,15 +91,11 @@ public class RentalProperty: ObservableObject {
             self.extra = jo["extra"] as! Double
             self.expenses = jo["expenses"] as! Double
             self.rent = jo["rent"] as! Double
-            return true;
-            
-        } else {
-            return false
         }
     }
     
     // public boolean save(Context activity) {
-    func save() -> Bool {
+    func save() {
         let jo : [String : Any] = [
             "purchasePrice": purchasePrice,
             "loanAmt" : loanAmt,
@@ -113,92 +106,10 @@ public class RentalProperty: ObservableObject {
             "expenses" : expenses,
             "rent" : rent]
         
-        return self.saveUserdefault(data: jo, forKey: MyStatic.KEY_PROPERTY)
+        _ = self.saveUserdefault(data: jo, forKey: MyStatic.KEY_PROPERTY)
     }
     
     /////////// SharedPreferences usage /////////////////
-    // public boolean saveSharedPref(String key, String data, Context activity) {
-    func saveSharedPref(key:String,data:AnyObject)->Bool{
-        // Commented Java code ommitted
-        return true
-    }
-    
-    // public String retrieveSharedPref(String key, Context activity) {
-    func retrieveSharedPref(key: String) -> AnyObject? {
-        // Commented Java code ommitted
-        return nil
-    }
-    
-    // public void deleteSharedPref(String key,Context activity) {
-    func deleteSharedPref(key: String) {
-        // Commented Java code ommitted
-    }
-    
-    // JavaBean accessors
-    func getPurchasePrice()-> Double {
-        return self.purchasePrice;
-    }
-    
-    func setPurchasePrice(purchasePrice: Double) {
-        self.purchasePrice = purchasePrice;
-    }
-    
-    func getLoanAmt()-> Double {
-        return self.loanAmt;
-    }
-    
-    func setLoanAmt(loanAmt: Double) {
-        self.loanAmt = loanAmt;
-    }
-    
-    func getInterestRate()-> Double {
-        return self.interestRate;
-    }
-    
-    func setInterestRate(interestRate: Double) {
-        self.interestRate = interestRate;
-    }
-    
-    func getNumOfTerms()-> Int {
-        return self.numOfTerms;
-    }
-    
-    func setNumOfTerms(numOfTerms: Int) {
-        self.numOfTerms = numOfTerms;
-    }
-    
-    func getEscrow()-> Double {
-        return self.escrow;
-    }
-    
-    func setEscrow(_ escrow: Double) {
-        self.escrow = escrow;
-    }
-    
-    func getExtra()-> Double {
-        return self.extra;
-    }
-    
-    func setExtra(_ extra: Double) {
-        self.extra = extra;
-    }
-    
-    func getExpenses()-> Double {
-        return self.expenses;
-    }
-    
-    func setExpenses(_ expenses: Double) {
-        self.expenses = expenses;
-    }
-    
-    func getRent()-> Double {
-        return self.rent;
-    }
-    
-    func setRent(_ rent: Double) {
-        self.rent = rent;
-    }
-    
     let userDefaults = UserDefaults.standard
     func saveUserdefault(data:Any, forKey:String) -> Bool{
         userDefaults.set(data, forKey: forKey)

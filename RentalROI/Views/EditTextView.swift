@@ -23,12 +23,22 @@ struct EditTextView: View {
             return "$"
         }
     }
-    
+
     private var bindingVaue: Binding<Double> {
         get {
             switch attrToEdit {
             case .purchasePrice:
                 return $rentalProperty.purchasePrice
+            case .downPayment:
+                return Binding(
+                    get: {
+                        (rentalProperty.purchasePrice - rentalProperty.loanAmt) * 100.0/rentalProperty.purchasePrice
+                    },
+                    set: { newValue in
+                        rentalProperty.loanAmt = rentalProperty.purchasePrice * (1.0 - newValue/100.0)
+                    }
+                )
+
             case .loanAmt:
                 return $rentalProperty.loanAmt
             case .interestRate:
@@ -59,8 +69,6 @@ struct EditTextView: View {
     }
     
     var body: some View {
-        
-        
         NavigationView {
             VStack {
                 HStack {
@@ -68,58 +76,25 @@ struct EditTextView: View {
                     TextField(attrToEdit.name, value: bindingVaue, formatter: formatter, onEditingChanged: {
                         print("\($0) \(bindingVaue.wrappedValue)")
                     }, onCommit: {
-                        
+                        showingEditView = false
                     }).multilineTextAlignment(.center)
                     .grayscale(0.50)
                     .keyboardType(.numbersAndPunctuation)
                     .onAppear(perform: {
-                        print(">>TextField.onAppear")
                     })
                     .textFieldStyle(PlainTextFieldStyle())
                 }
                 Divider().frame(height:0.5).padding(.horizontal).background(Color("TableSection"))
                 
-//                Button(action: {
-//                    print("dismisses form")
-//                    //                self.presentationMode.wrappedValue.dismiss()
-//                    showingEditView = false
-//                }) {
-//                    Text("OK")
-//                }
             }.padding()
             
-            .navigationBarTitle("\(attrToEdit.name) (\(uom))", displayMode: .automatic)
+            .navigationBarTitle("\(attrToEdit.name) (\(uom))", displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
-                print("dismisses form")
-                //                self.presentationMode.wrappedValue.dismiss()
                 showingEditView = false
             }) {
-                Text("OK")
+                Text("Cancel")
             })
         }
-        
-        
-        //        VStack {
-        //            HStack {
-        //                Text("\(attrToEdit.name) (\(uom))").padding(20)
-        //                TextField(attrToEdit.name, value: bindingVaue, formatter: formatter, onEditingChanged: {
-        //                    print("\($0) \(bindingVaue.wrappedValue)")
-        //                }, onCommit: {
-        //
-        //                }).multilineTextAlignment(.center)
-        //                .grayscale(0.50)
-        //                .keyboardType(.numbersAndPunctuation)
-        //            }
-        //
-        //            Button(action: {
-        //                print("dismisses form")
-        //                //                self.presentationMode.wrappedValue.dismiss()
-        //                showingEditView = false
-        //            }) {
-        //                Text("OK")
-        //            }
-        //        }
-        
     }
 }
 
@@ -127,6 +102,9 @@ struct EditTextView_Previews: PreviewProvider {
     @State static var attr: RoiAttribute = RoiAttribute.numOfTerms
     @State static var showingEditView = true
     static var previews: some View {
-        EditTextView(attrToEdit: $attr, showingEditView: $showingEditView).environmentObject(RentalProperty.sharedInstance())
+        Group {
+            EditTextView(attrToEdit: $attr, showingEditView: $showingEditView).environmentObject(RentalProperty.sharedInstance()).environment(\.colorScheme, .dark)
+            EditTextView(attrToEdit: $attr, showingEditView: $showingEditView).environmentObject(RentalProperty.sharedInstance())
+        }
     }
 }

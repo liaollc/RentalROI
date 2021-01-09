@@ -14,18 +14,18 @@ struct RoiAttributeRow: View {
     var postfix = ""
     var isInt = false
     var attribute: RoiAttribute
+
     @Binding var value: Double
     @Binding var attrToEdit: RoiAttribute
     @Binding var showingEditView: Bool
     
     var body: some View {
-        let label = String(format: isInt ? "%@%.0f%@" : "%@%.2f%@", prefix, value, postfix)
+        let specifier = prefix + (isInt ? "%.0f" : "%.2f") + postfix
         VStack {
             HStack {
                 Text(attribute.name)
                 Spacer()
-                Text(label)
-                    .foregroundColor(.blue)
+                Text("\(value, specifier: specifier)").foregroundColor(.blue)
                     .gesture(TapGesture().onEnded({ isOk in
                         self.attrToEdit = attribute
                         self.showingEditView = true
@@ -38,7 +38,7 @@ struct RoiAttributeRow: View {
                 })
             }
             Divider().frame(height:0.5).background(Color("TableSection"))
-        }.padding(8).padding(.leading, 16).padding(.trailing, 16)
+        }.padding(8).padding(.leading, 8).padding(.trailing, 8)
     }
 }
 
@@ -49,10 +49,10 @@ struct PropertyAttribute_Previews: PreviewProvider {
     
     static var previews: some View {
         RoiAttributeRow(
-            prefix: "", postfix: " yr.",
-            isInt: true,
+            prefix: "", postfix: "%%",
+            isInt: false,
             attribute: RoiAttribute.purchasePrice,
-            value: .constant(0.0),
+            value: .constant(120000.0),
             attrToEdit: $attrToEdit,
             showingEditView: $showingEditView
         )

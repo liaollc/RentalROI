@@ -1,12 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "outline_psychology_black_36dp.png",
+      "filename" : "appicon180.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "outline_psychology_black_36dp-1.png",
       "idiom" : "universal",
       "scale" : "2x"
     },

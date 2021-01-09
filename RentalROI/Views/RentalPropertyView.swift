@@ -15,6 +15,12 @@ struct RentalPropertyView: View {
     @State var valueText: Double = 0.0
     
     @State var toAmortizationView: Bool = false
+    @State var showProgressBar: Bool = false
+    
+    @State var payments: [PaymentScheduleDto] = []
+    
+    init() {
+    }
     
     var body: some View {
         let downPaymentBinding = Binding(
@@ -29,66 +35,107 @@ struct RentalPropertyView: View {
             get: { Double(rentalProperty.numOfTerms)},
             set: { rentalProperty.numOfTerms = Int($0) }
         )
-
         
         NavigationView {
-            
             ScrollView {
+                if showProgressBar {
+                    ProgressView().padding()
+                }
+                
                 VStack {
-                    Text("  MORTGAGE")
-                        .frame(width: UIScreen.main.bounds.width, height: 60, alignment: .leading)
-                        .background(Color("TableSection"))
-                        .padding(10)
-                    
+                    TableSectionView(title: "MORTGAGE")
                     RoiAttributeRow(attribute: RoiAttribute.purchasePrice, value: $rentalProperty.purchasePrice, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     
-                    VStack {
+                    VStack(alignment: .leading) {
+                        Text(RoiAttribute.downPayment.name).multilineTextAlignment(.leading) //.background(Color.pink)
                         HStack {
-                            Text(RoiAttribute.downPayment.name)
                             Slider(value: downPaymentBinding, in: 0...100, step: 1)
-                            Text("\(downPaymentBinding.wrappedValue, specifier: "%.2f")%")
-                        }
-                        Divider().background(Color("TableSection")).grayscale(0.2)
-                    }
-                    .padding(8).padding(.leading, 16).padding(.trailing, 16)
+                            Spacer()
+                            Text("\(downPaymentBinding.wrappedValue, specifier: "%.0f")%")
+                                .foregroundColor(.blue)
+                                .gesture(TapGesture().onEnded({ isOk in
+                                    showingEditView = true
+                                    attrToEdit = RoiAttribute.downPayment
+                                }))
+                            Button(action: {
+                                showingEditView = true
+                                attrToEdit = RoiAttribute.downPayment
+                            }, label: {
+                                Image(systemName: "pencil") // chevron.right
+                            })
 
+                        }.padding(.top, -8)
+                        Divider().frame(height:0.5).background(Color("TableSection"))
+                    }
+                    .padding(.top, 0).padding(.leading, 16).padding(.trailing, 16).padding(.bottom, 0)
+                    
                     RoiAttributeRow(attribute: RoiAttribute.loanAmt, value: $rentalProperty.loanAmt, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
-                    RoiAttributeRow(prefix: "", postfix: "%", attribute: RoiAttribute.interestRate, value: $rentalProperty.interestRate, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
+                    RoiAttributeRow(prefix: "", postfix: "%%", attribute: RoiAttribute.interestRate, value: $rentalProperty.interestRate, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     RoiAttributeRow(prefix: "", postfix: " yr.", isInt: true, attribute: RoiAttribute.numOfTerms, value: numOfTermsBinding, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     RoiAttributeRow(attribute: RoiAttribute.escrow, value: $rentalProperty.escrow, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     RoiAttributeRow(attribute: RoiAttribute.extra, value: $rentalProperty.extra, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                 }
                 
                 VStack {
-                    Text("  OPERATIONS")
-                        .frame(width: UIScreen.main.bounds.width, height: 60, alignment: .leading)
-                        .background(Color("TableSection"))
-                        .padding(10).padding(.top, -20)
-                    
+                    TableSectionView(title: "OPERATIONS")
                     RoiAttributeRow(attribute: RoiAttribute.expenses, value: $rentalProperty.expenses, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     RoiAttributeRow(attribute: RoiAttribute.rent, value: $rentalProperty.rent, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
-
+                    
                 }.padding(.bottom, 60)
-
+                
+                // a hidden to NavigationLink just for navigating to next screen.
+                NavigationLink(
+                    destination: AmortizationListView(payments: $payments),
+                    isActive: $toAmortizationView,
+                    label: {
+                        Text("workaround")
+                    }).hidden()
+                
             }
-            .navigationBarTitle("Property", displayMode: .automatic)
+            .navigationBarTitle("Property", displayMode: .large)
             .navigationBarItems(trailing: Button(action: {
-                toAmortizationView = true
+                rentalProperty.save()
+                if let p = rentalProperty.getSavedAmortization() {
+                    payments = p
+                    toAmortizationView = true
+                } else {
+                    let request = GetAmortizationRequest(
+                        amount: rentalProperty.loanAmt,
+                        rate: rentalProperty.interestRate,
+                        terms: rentalProperty.numOfTerms,
+                        escrow: rentalProperty.escrow,
+                        extra: rentalProperty.extra)
+                    
+                    showProgressBar = true
+                    RestHelper.getAmortization(request) { (dto, data) in
+                        showProgressBar = false
+                        if let p = dto {
+                            payments = p
+                            rentalProperty.saveAmortization(p)
+                            
+                            toAmortizationView = true
+                        } else {
+                            // error ?
+                        }
+                    } errorUiHandler: { (data, resp, error) in
+                        showProgressBar = false
+                    }
+                }
             }, label: {
-                Text("Amortization")
+                Text("Schedule")
             }))
-            
             .sheet(isPresented: $showingEditView) {
                 EditTextView(attrToEdit: $attrToEdit, showingEditView: $showingEditView)
             }
-            
-            
         }
     }
 }
 
 struct RentalPropertyView_Previews: PreviewProvider {
     static var previews: some View {
-        RentalPropertyView().environmentObject(RentalProperty.sharedInstance())
+        Group {
+            RentalPropertyView().environmentObject(RentalProperty.sharedInstance()).environment(\.colorScheme, .light)
+            RentalPropertyView().environmentObject(RentalProperty.sharedInstance()).environment(\.colorScheme, .dark)
+        }
     }
 }

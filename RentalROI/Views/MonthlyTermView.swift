@@ -8,13 +8,66 @@
 import SwiftUI
 
 struct MonthlyTermView: View {
+    @EnvironmentObject var rentalProperty: RentalProperty
+    @State var payment: PaymentScheduleDto
+
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+//        Text("Hello, World: \(payment.balance0)")
+        ScrollView {
+            let p = payment
+            VStack {
+                // first Mortgage Payment Section
+                TableSectionView(title: "MORTGAGE PAYMENT")
+                
+                RightDetailCellView(text: "No. \(p.pmtNo)", detailText: String(format: "$%.2f", p.interest + p.principal))
+                RightDetailCellView(text: "principal", detailText: String(format: "$%.2f", p.principal))
+                RightDetailCellView(text: "Interest", detailText: String(format: "$%.2f", p.interest))
+                RightDetailCellView(text: "Escrow", detailText: String(format: "$%.2f", p.escrow))
+                RightDetailCellView(text: "Add'l Payment", detailText: String(format: "$%.2f", p.extra))
+                RightDetailCellView(text: "Mortgage Balance", detailText: (p.balance0 - p.principal).toCurrencyString())
+
+            }
+            VStack {
+                // 2nd Investment Section
+                TableSectionView(title: "INVESTMENT")
+                
+                RightDetailCellView(text: "Equity", detailText: p.equity(rentalProperty).toCurrencyString())
+                RightDetailCellView(text: "Invested", detailText: p.invested(rentalProperty).toCurrencyString())
+                
+                // self.mRoi.text = String(format: "%.2f%% ($%.2f/mo)", roi * 100, net)
+                RightDetailCellView(text: "ROI", detailText: String(format: "%.2f%% (%@/mo)", p.roi(rentalProperty), p.net(rentalProperty).toCurrencyString()))
+            }
+        }.navigationTitle("Payment")
+    }    
 }
 
 struct MonthlyTermView_Previews: PreviewProvider {
+    @State static var payment: PaymentScheduleDto = PaymentScheduleDto(
+        pmtNo: 1,
+        balance0: 12000.0,
+        rate: 0.0,
+        principal: 120.0,
+        interest: 2.5,
+        escrow: 0.0,
+        extra: 0.0
+    )
+    
+    static var property: RentalProperty {
+        let p = RentalProperty.sharedInstance()
+        p.purchasePrice = 300000.0
+        p.rent = 1800.0
+        return p
+    }
     static var previews: some View {
-        MonthlyTermView()
+        MonthlyTermView(payment: payment).environmentObject(property)
+//            .previewLayout(.fixed(width: 300, height: 70))
+    }
+}
+
+extension Double {
+    func toCurrencyString() -> String {
+        let fmt = NumberFormatter()
+        fmt.numberStyle = .currency
+        return fmt.string(from: NSNumber(value: self)) ?? ""
     }
 }
