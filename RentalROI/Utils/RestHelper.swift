@@ -141,7 +141,7 @@ extension WsRequestable {
 }
 
 private struct MyStatic {
-    static let URL_service_tmpl = "http://www.pdachoice.com/ras/service/amortization?loan=%.2f&rate=%.3f&terms=%d&extra=%.2f&escrow=%.2f"
+    static let URL_service_tmpl = "https://www.pdachoice.com/ras/service/amortization?loan=%.2f&rate=%.3f&terms=%d&extra=%.2f&escrow=%.2f"
     static let KEY_DATA = "data"
     static let KEY_RC = "rc"
     static let KEY_ERROR = "error"

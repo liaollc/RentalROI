@@ -103,8 +103,8 @@ struct EditTextView_Previews: PreviewProvider {
     @State static var showingEditView = true
     static var previews: some View {
         Group {
-            EditTextView(attrToEdit: $attr, showingEditView: $showingEditView).environmentObject(RentalProperty.sharedInstance()).environment(\.colorScheme, .dark)
-            EditTextView(attrToEdit: $attr, showingEditView: $showingEditView).environmentObject(RentalProperty.sharedInstance())
+            EditTextView(attrToEdit: $attr, showingEditView: $showingEditView).environmentObject(RentalProperty.sharedInstance).environment(\.colorScheme, .dark)
+            EditTextView(attrToEdit: $attr, showingEditView: $showingEditView).environmentObject(RentalProperty.sharedInstance)
         }
     }
 }

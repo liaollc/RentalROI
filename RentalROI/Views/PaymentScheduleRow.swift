@@ -51,7 +51,7 @@ struct PaymentScheduleRow_Previews: PreviewProvider {
         extra: 0.0
     )
     static var previews: some View {
-        PaymentScheduleRow(payment: payment).environmentObject(RentalProperty.sharedInstance())
+        PaymentScheduleRow(payment: payment).environmentObject(RentalProperty.sharedInstance)
             .previewLayout(.fixed(width: 300, height: 70))
     }
 }

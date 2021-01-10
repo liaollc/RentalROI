@@ -30,6 +30,6 @@ struct AmortizationView_Previews: PreviewProvider {
     @State static var payments: [PaymentScheduleDto] = []
     
     static var previews: some View {
-        AmortizationListView(payments: $payments).environmentObject(RentalProperty.sharedInstance())
+        AmortizationListView(payments: $payments).environmentObject(RentalProperty.sharedInstance)
     }
 }

@@ -53,7 +53,7 @@ struct MonthlyTermView_Previews: PreviewProvider {
     )
     
     static var property: RentalProperty {
-        let p = RentalProperty.sharedInstance()
+        let p = RentalProperty.sharedInstance
         p.purchasePrice = 300000.0
         p.rent = 1800.0
         return p

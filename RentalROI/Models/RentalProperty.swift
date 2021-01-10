@@ -11,6 +11,13 @@ import Foundation
 // view model should be seperated from domain model
 public class RentalProperty: ObservableObject {
     
+    static let sharedInstance: RentalProperty = {
+        let instance = RentalProperty()
+        // setup code
+        return instance
+    }()
+
+    
     @Published var purchasePrice: Double = 200000.0;
     @Published var loanAmt = 160000.0;
     @Published var interestRate = 5.0;
@@ -36,7 +43,7 @@ public class RentalProperty: ObservableObject {
         static let KEY_PROPERTY = "KEY_PROPERTY";
         private static let PREFS_NAME = "MyPrefs";
         private static let MODE = 0; // probably Android thing
-        static var _sharedInstance = RentalProperty()
+//        static var _sharedInstance = RentalProperty()
     }
     
     /////////////////////////////////////////////
@@ -45,9 +52,9 @@ public class RentalProperty: ObservableObject {
         // Commented Java code ommitted
     }
     
-    class func sharedInstance() -> RentalProperty {
-        return MyStatic._sharedInstance
-    }
+//    class func sharedInstance() -> RentalProperty {
+//        return MyStatic._sharedInstance
+//    }
     
     func getAmortizationPersistentKey() -> String {
         let aKey = String(format: "%.2f-%.3f-%d-%.2f-%.2f", self.loanAmt, self.interestRate, self.numOfTerms, self.escrow, self.extra);

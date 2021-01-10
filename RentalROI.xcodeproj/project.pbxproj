@@ -22,6 +22,7 @@
 		B399F6E42585941200EB529D /* RentalProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = B399F6E32585941200EB529D /* RentalProperty.swift */; };
 		B399F6E82585E1E000EB529D /* RoiAttributeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B399F6E72585E1E000EB529D /* RoiAttributeRow.swift */; };
 		B399F6EE25880EB000EB529D /* outline_add_black_36dp.png in Resources */ = {isa = PBXBuildFile; fileRef = B399F6ED25880EAF00EB529D /* outline_add_black_36dp.png */; };
+		B3F9E66B25AB65A900165C02 /* MortgageCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9E66A25AB65A900165C02 /* MortgageCalculator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		B399F6E32585941200EB529D /* RentalProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalProperty.swift; sourceTree = "<group>"; };
 		B399F6E72585E1E000EB529D /* RoiAttributeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoiAttributeRow.swift; sourceTree = "<group>"; };
 		B399F6ED25880EAF00EB529D /* outline_add_black_36dp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outline_add_black_36dp.png; sourceTree = "<group>"; };
+		B3F9E66A25AB65A900165C02 /* MortgageCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MortgageCalculator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 			isa = PBXGroup;
 			children = (
 				B38572B125A7D60F009BC768 /* RestHelper.swift */,
+				B3F9E66A25AB65A900165C02 /* MortgageCalculator.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				B38572BB25A831BD009BC768 /* PaymentScheduleRow.swift in Sources */,
 				B38572B225A7D60F009BC768 /* RestHelper.swift in Sources */,
 				B399F6E42585941200EB529D /* RentalProperty.swift in Sources */,
+				B3F9E66B25AB65A900165C02 /* MortgageCalculator.swift in Sources */,
 				B399F6E82585E1E000EB529D /* RoiAttributeRow.swift in Sources */,
 				B399F6DA258593AD00EB529D /* AmortizationListView.swift in Sources */,
 				B399F6C62585926100EB529D /* RentalROIApp.swift in Sources */,
@@ -340,7 +344,7 @@
 				CODE_SIGN_ENTITLEMENTS = RentalROI/RentalROI.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"RentalROI/Preview Content\"";
 				DEVELOPMENT_TEAM = 6LJPUMKE4E;
 				ENABLE_PREVIEWS = YES;
@@ -368,7 +372,7 @@
 				CODE_SIGN_ENTITLEMENTS = RentalROI/RentalROI.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_ASSET_PATHS = "\"RentalROI/Preview Content\"";
 				DEVELOPMENT_TEAM = 6LJPUMKE4E;
 				ENABLE_PREVIEWS = YES;

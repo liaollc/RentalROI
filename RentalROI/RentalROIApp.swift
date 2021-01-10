@@ -11,12 +11,12 @@ import SwiftUI
 struct RentalROIApp: App {
     
     init() {
-        RentalProperty.sharedInstance().load()
+        RentalProperty.sharedInstance.load()
     }
 
     var body: some Scene {
         WindowGroup {
-            RentalPropertyView().environmentObject(RentalProperty.sharedInstance())
+            RentalPropertyView().environmentObject(RentalProperty.sharedInstance)
         }
     }
 }

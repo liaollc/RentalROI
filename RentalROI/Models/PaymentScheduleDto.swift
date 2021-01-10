@@ -11,14 +11,6 @@ struct PaymentScheduleDto: Codable, Identifiable {
     var id: Int {
         return pmtNo
     }
-    
-    //"pmtNo":1,
-    //"balance0":8000.0,
-    //"rate":5.0,
-    //"principal":29.93015680599037,
-    //"interest":33.333333333333336,
-    //"escrow":100.0,
-    //"extra":300.0
 
     var pmtNo: Int
     var balance0: Double
@@ -45,8 +37,12 @@ struct PaymentScheduleDto: Codable, Identifiable {
         return roi * 100
     }
     func equity(_ property: RentalProperty) -> Double {
-        let equity = property.purchasePrice - balance0
+        let equity = property.purchasePrice - balance0 + principal
         return equity
+    }
+    
+    var remainingBalance: Double {
+       return balance0 - principal - extra
     }
 
 //    override func viewDidLoad() {
@@ -66,7 +62,7 @@ struct PaymentScheduleDto: Codable, Identifiable {
 //      self.mAddlPmt.text = String(format: "$%.2f", extra)
 //      self.mBalance.text = String(format: "$%.2f", balance)
 //
-//      let property = RentalProperty.sharedInstance();
+//      let property = RentalProperty.sharedInstance;
 //      let invested = property.getPurchasePrice() - property.getLoanAmt() + (property.getExtra() * Double(paymentPeriod))
 //      let net = property.getRent() - escrow - interest - property.getExpenses();
 //      let roi = net * 12 / invested

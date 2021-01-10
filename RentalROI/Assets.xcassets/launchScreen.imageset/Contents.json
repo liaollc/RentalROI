@@ -1,15 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "appicon180.png",
+      "filename" : "appicon320.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "appicon640.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "appicon960.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

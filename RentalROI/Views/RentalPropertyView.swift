@@ -18,6 +18,7 @@ struct RentalPropertyView: View {
     @State var showProgressBar: Bool = false
     
     @State var payments: [PaymentScheduleDto] = []
+    @State var useApi = false
     
     init() {
     }
@@ -63,7 +64,7 @@ struct RentalPropertyView: View {
                             }, label: {
                                 Image(systemName: "pencil") // chevron.right
                             })
-
+                            
                         }.padding(.top, -8)
                         Divider().frame(height:0.5).background(Color("TableSection"))
                     }
@@ -91,10 +92,14 @@ struct RentalPropertyView: View {
                         Text("workaround")
                     }).hidden()
                 
+                Toggle(isOn: $useApi) {
+                    Text("Server computation (internet required)").font(.footnote)
+                }.padding()
             }
             .navigationBarTitle("Property", displayMode: .large)
             .navigationBarItems(trailing: Button(action: {
                 rentalProperty.save()
+                
                 if let p = rentalProperty.getSavedAmortization() {
                     payments = p
                     toAmortizationView = true
@@ -106,19 +111,25 @@ struct RentalPropertyView: View {
                         escrow: rentalProperty.escrow,
                         extra: rentalProperty.extra)
                     
-                    showProgressBar = true
-                    RestHelper.getAmortization(request) { (dto, data) in
-                        showProgressBar = false
-                        if let p = dto {
-                            payments = p
-                            rentalProperty.saveAmortization(p)
-                            
-                            toAmortizationView = true
-                        } else {
-                            // error ?
+                    if useApi {
+                        showProgressBar = true
+                        RestHelper.getAmortization(request) { (dto, data) in
+                            showProgressBar = false
+                            if let p = dto {
+                                payments = p
+                                rentalProperty.saveAmortization(p)
+                                toAmortizationView = true
+                            } else {
+                                // error ?
+                            }
+                        } errorUiHandler: { (data, resp, error) in
+                            showProgressBar = false
                         }
-                    } errorUiHandler: { (data, resp, error) in
-                        showProgressBar = false
+                    } else {
+                        let p = MortgageCalculator.sharedInstance.calcPayments()
+                        payments = p
+                        rentalProperty.saveAmortization(p)
+                        toAmortizationView = true
                     }
                 }
             }, label: {
@@ -127,15 +138,15 @@ struct RentalPropertyView: View {
             .sheet(isPresented: $showingEditView) {
                 EditTextView(attrToEdit: $attrToEdit, showingEditView: $showingEditView)
             }
-        }
+        }.navigationViewStyle(StackNavigationViewStyle())
     }
 }
 
 struct RentalPropertyView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            RentalPropertyView().environmentObject(RentalProperty.sharedInstance()).environment(\.colorScheme, .light)
-            RentalPropertyView().environmentObject(RentalProperty.sharedInstance()).environment(\.colorScheme, .dark)
+            RentalPropertyView().environmentObject(RentalProperty.sharedInstance).environment(\.colorScheme, .light)
+            RentalPropertyView().environmentObject(RentalProperty.sharedInstance).environment(\.colorScheme, .dark)
         }
     }
 }
