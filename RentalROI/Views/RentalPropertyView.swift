@@ -40,7 +40,8 @@ struct RentalPropertyView: View {
         NavigationView {
             ScrollView {
                 if showProgressBar {
-                    ProgressView().padding()
+                    LottieView(name: "smiley")
+                                    .frame(width:100, height:100)
                 }
                 
                 VStack {
@@ -48,11 +49,15 @@ struct RentalPropertyView: View {
                     RoiAttributeRow(attribute: RoiAttribute.purchasePrice, value: $rentalProperty.purchasePrice, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     
                     VStack(alignment: .leading) {
-                        Text(RoiAttribute.downPayment.name).multilineTextAlignment(.leading) //.background(Color.pink)
+                        HStack {
+                            Text(RoiAttribute.downPayment.name).multilineTextAlignment(.leading)
+                            Spacer()
+                        }
                         HStack {
                             Slider(value: downPaymentBinding, in: 0...100, step: 1)
                             Spacer()
-                            Text("\(downPaymentBinding.wrappedValue, specifier: "%.0f")%")
+                            Text("\(rentalProperty.purchasePrice - rentalProperty.loanAmt, specifier: "$%.0f")").font(.caption).foregroundColor(.secondary)
+                            Text("\(downPaymentBinding.wrappedValue, specifier: "%.1f")%")
                                 .foregroundColor(.blue)
                                 .gesture(TapGesture().onEnded({ isOk in
                                     showingEditView = true
@@ -68,7 +73,7 @@ struct RentalPropertyView: View {
                         }.padding(.top, -8)
                         Divider().frame(height:0.5).background(Color("TableSection"))
                     }
-                    .padding(.top, 0).padding(.leading, 16).padding(.trailing, 16).padding(.bottom, 0)
+                    .padding(.top, -8).padding(.leading, 16).padding(.trailing, 16).padding(.bottom, -8)
                     
                     RoiAttributeRow(attribute: RoiAttribute.loanAmt, value: $rentalProperty.loanAmt, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     RoiAttributeRow(prefix: "", postfix: "%%", attribute: RoiAttribute.interestRate, value: $rentalProperty.interestRate, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
@@ -100,9 +105,13 @@ struct RentalPropertyView: View {
             .navigationBarItems(trailing: Button(action: {
                 rentalProperty.save()
                 
+                showProgressBar = true
                 if let p = rentalProperty.getSavedAmortization() {
-                    payments = p
-                    toAmortizationView = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        showProgressBar = false
+                        payments = p
+                        toAmortizationView = true
+                    }
                 } else {
                     let request = GetAmortizationRequest(
                         amount: rentalProperty.loanAmt,
@@ -112,7 +121,6 @@ struct RentalPropertyView: View {
                         extra: rentalProperty.extra)
                     
                     if useApi {
-                        showProgressBar = true
                         RestHelper.getAmortization(request) { (dto, data) in
                             showProgressBar = false
                             if let p = dto {
@@ -126,10 +134,13 @@ struct RentalPropertyView: View {
                             showProgressBar = false
                         }
                     } else {
-                        let p = MortgageCalculator.sharedInstance.calcPayments()
-                        payments = p
-                        rentalProperty.saveAmortization(p)
-                        toAmortizationView = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            showProgressBar = false
+                            let p = MortgageCalculator.sharedInstance.calcPayments()
+                            payments = p
+                            rentalProperty.saveAmortization(p)
+                            toAmortizationView = true
+                        }
                     }
                 }
             }, label: {

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -21,11 +21,14 @@
 		B399F6E0258593E100EB529D /* MonthlyTermView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B399F6DF258593E100EB529D /* MonthlyTermView.swift */; };
 		B399F6E42585941200EB529D /* RentalProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = B399F6E32585941200EB529D /* RentalProperty.swift */; };
 		B399F6E82585E1E000EB529D /* RoiAttributeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B399F6E72585E1E000EB529D /* RoiAttributeRow.swift */; };
-		B399F6EE25880EB000EB529D /* outline_add_black_36dp.png in Resources */ = {isa = PBXBuildFile; fileRef = B399F6ED25880EAF00EB529D /* outline_add_black_36dp.png */; };
 		B3F9E66B25AB65A900165C02 /* MortgageCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9E66A25AB65A900165C02 /* MortgageCalculator.swift */; };
+		B3F9E67725ABC75D00165C02 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B3F9E67625ABC75D00165C02 /* Lottie */; };
+		B3F9E67A25ABC78100165C02 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9E67925ABC78100165C02 /* LottieView.swift */; };
+		B3F9E6A425ABDFD300165C02 /* smiley.json in Resources */ = {isa = PBXBuildFile; fileRef = B3F9E6A325ABDFD300165C02 /* smiley.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B36FF8E825ABE9AE00CBD241 /* RentalROIMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalROIMacApp.swift; sourceTree = "<group>"; };
 		B38551AF25A967AD00BB3482 /* RentalROI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RentalROI.entitlements; sourceTree = "<group>"; };
 		B38572B125A7D60F009BC768 /* RestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestHelper.swift; sourceTree = "<group>"; };
 		B38572BA25A831BD009BC768 /* PaymentScheduleRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentScheduleRow.swift; sourceTree = "<group>"; };
@@ -43,8 +46,9 @@
 		B399F6DF258593E100EB529D /* MonthlyTermView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyTermView.swift; sourceTree = "<group>"; };
 		B399F6E32585941200EB529D /* RentalProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalProperty.swift; sourceTree = "<group>"; };
 		B399F6E72585E1E000EB529D /* RoiAttributeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoiAttributeRow.swift; sourceTree = "<group>"; };
-		B399F6ED25880EAF00EB529D /* outline_add_black_36dp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = outline_add_black_36dp.png; sourceTree = "<group>"; };
 		B3F9E66A25AB65A900165C02 /* MortgageCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MortgageCalculator.swift; sourceTree = "<group>"; };
+		B3F9E67925ABC78100165C02 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		B3F9E6A325ABDFD300165C02 /* smiley.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = smiley.json; path = ../../../../../Downloads/smiley.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,12 +56,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B3F9E67725ABC75D00165C02 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B36FF8E725ABE9AE00CBD241 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				B36FF8E825ABE9AE00CBD241 /* RentalROIMacApp.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
 		B38572B025A7D5E2009BC768 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
@@ -71,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				B399F6C42585926100EB529D /* RentalROI */,
+				B36FF8E725ABE9AE00CBD241 /* Shared */,
 				B399F6C32585926100EB529D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,13 +100,13 @@
 		B399F6C42585926100EB529D /* RentalROI */ = {
 			isa = PBXGroup;
 			children = (
+				B3F9E67C25ABCA8000165C02 /* Resources */,
 				B38551AF25A967AD00BB3482 /* RentalROI.entitlements */,
 				B38572B025A7D5E2009BC768 /* Utils */,
 				B399F6E2258593F500EB529D /* Models */,
 				B399F6D82585937200EB529D /* Views */,
 				B399F6C52585926100EB529D /* RentalROIApp.swift */,
 				B399F6C92585926200EB529D /* Assets.xcassets */,
-				B399F6ED25880EAF00EB529D /* outline_add_black_36dp.png */,
 				B399F6CE2585926200EB529D /* Info.plist */,
 				B399F6CB2585926200EB529D /* Preview Content */,
 			);
@@ -118,6 +132,7 @@
 				B38572C025A90376009BC768 /* RightDetailCellView.swift */,
 				B38572BA25A831BD009BC768 /* PaymentScheduleRow.swift */,
 				B38572BD25A90134009BC768 /* TableSectionView.swift */,
+				B3F9E67925ABC78100165C02 /* LottieView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -129,6 +144,14 @@
 				B399F6E32585941200EB529D /* RentalProperty.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		B3F9E67C25ABCA8000165C02 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				B3F9E6A325ABDFD300165C02 /* smiley.json */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -147,6 +170,9 @@
 			dependencies = (
 			);
 			name = RentalROI;
+			packageProductDependencies = (
+				B3F9E67625ABC75D00165C02 /* Lottie */,
+			);
 			productName = RentalROI;
 			productReference = B399F6C22585926100EB529D /* RentalROI.app */;
 			productType = "com.apple.product-type.application";
@@ -157,7 +183,7 @@
 		B399F6BA2585926100EB529D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1220;
+				LastSwiftUpdateCheck = 1230;
 				LastUpgradeCheck = 1220;
 				TargetAttributes = {
 					B399F6C12585926100EB529D = {
@@ -174,6 +200,9 @@
 				Base,
 			);
 			mainGroup = B399F6B92585926100EB529D;
+			packageReferences = (
+				B3F9E67525ABC75D00165C02 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = B399F6C32585926100EB529D /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -189,8 +218,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B399F6CD2585926200EB529D /* Preview Assets.xcassets in Resources */,
-				B399F6EE25880EB000EB529D /* outline_add_black_36dp.png in Resources */,
 				B399F6CA2585926200EB529D /* Assets.xcassets in Resources */,
+				B3F9E6A425ABDFD300165C02 /* smiley.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +241,7 @@
 				B399F6E82585E1E000EB529D /* RoiAttributeRow.swift in Sources */,
 				B399F6DA258593AD00EB529D /* AmortizationListView.swift in Sources */,
 				B399F6C62585926100EB529D /* RentalROIApp.swift in Sources */,
+				B3F9E67A25ABC78100165C02 /* LottieView.swift in Sources */,
 				B399F6D62585936200EB529D /* RentalPropertyView.swift in Sources */,
 				B399F6DD258593C800EB529D /* EditTextView.swift in Sources */,
 			);
@@ -271,13 +301,14 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 			};
 			name = Debug;
 		};
@@ -326,12 +357,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TARGETED_DEVICE_FAMILY = "1,2,6";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -344,7 +376,7 @@
 				CODE_SIGN_ENTITLEMENTS = RentalROI/RentalROI.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"RentalROI/Preview Content\"";
 				DEVELOPMENT_TEAM = 6LJPUMKE4E;
 				ENABLE_PREVIEWS = YES;
@@ -372,7 +404,7 @@
 				CODE_SIGN_ENTITLEMENTS = RentalROI/RentalROI.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_ASSET_PATHS = "\"RentalROI/Preview Content\"";
 				DEVELOPMENT_TEAM = 6LJPUMKE4E;
 				ENABLE_PREVIEWS = YES;
@@ -414,6 +446,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B3F9E67525ABC75D00165C02 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B3F9E67625ABC75D00165C02 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B3F9E67525ABC75D00165C02 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B399F6BA2585926100EB529D /* Project object */;
 }

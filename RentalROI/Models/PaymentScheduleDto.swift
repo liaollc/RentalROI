@@ -29,6 +29,11 @@ struct PaymentScheduleDto: Codable, Identifiable {
         let net = property.rent - property.escrow - interest - property.expenses;
         return net
     }
+    func cashFlow(_ property: RentalProperty) -> Double {
+        let cash = net(property) - principal
+        return cash
+    }
+
     func roi(_ property: RentalProperty) -> Double {
         let invested = self.invested(property)
         let net = self.net(property)

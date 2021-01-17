@@ -42,6 +42,11 @@
 		<string>launchScreen</string>
 		<key>UIImageRespectsSafeAreaInsets</key>
 		<true/>
+		<key>UINavigationBar</key>
+		<dict>
+			<key>UIImageName</key>
+			<string></string>
+		</dict>
 	</dict>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

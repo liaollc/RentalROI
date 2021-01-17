@@ -30,12 +30,16 @@ struct MonthlyTermView: View {
             VStack {
                 // 2nd Investment Section
                 TableSectionView(title: "INVESTMENT")
-                
                 RightDetailCellView(text: "Equity", detailText: p.equity(rentalProperty).toCurrencyString())
-                RightDetailCellView(text: "Invested", detailText: p.invested(rentalProperty).toCurrencyString())
+                RightDetailCellView(text: "Down Pay & Extra", detailText: p.invested(rentalProperty).toCurrencyString())
                 
-                // self.mRoi.text = String(format: "%.2f%% ($%.2f/mo)", roi * 100, net)
                 RightDetailCellView(text: "ROI", detailText: String(format: "%.2f%% (%@/mo)", p.roi(rentalProperty), p.net(rentalProperty).toCurrencyString()))
+
+                RightDetailCellView(text: "Cash Flow", detailText: String(format: "$%.2f/mo", p.cashFlow(rentalProperty)))
+                
+                RightDetailCellView(text: "Rent", detailText: String(format: "$%.2f/mo", rentalProperty.rent))
+
+                RightDetailCellView(text: "Expense", detailText: String(format: "$%.2f/mo", rentalProperty.expenses))
             }
         }.navigationTitle("Payment")
     }    
