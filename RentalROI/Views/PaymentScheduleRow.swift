@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PaymentScheduleRow: View {
-    @EnvironmentObject var rentalProperty: RentalProperty
+    @EnvironmentObject var rentalProperty: AppViewModel
     @State var payment: PaymentScheduleDto
     
     var body: some View {
@@ -27,7 +27,6 @@ struct PaymentScheduleRow: View {
                 }.foregroundColor(.secondary)
             }.padding(.leading, 8)
         }
-        
     }
     
     private var roi: Double {
@@ -51,7 +50,7 @@ struct PaymentScheduleRow_Previews: PreviewProvider {
         extra: 0.0
     )
     static var previews: some View {
-        PaymentScheduleRow(payment: payment).environmentObject(RentalProperty.sharedInstance)
+        PaymentScheduleRow(payment: payment).environmentObject(AppViewModel())
             .previewLayout(.fixed(width: 300, height: 70))
     }
 }

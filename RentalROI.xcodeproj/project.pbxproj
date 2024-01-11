@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B307E24A27002B8F004BBDD6 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B307E24927002B8F004BBDD6 /* Lottie */; };
+		B307E24E27002E48004BBDD6 /* smiley.json in Resources */ = {isa = PBXBuildFile; fileRef = B307E24D27002E48004BBDD6 /* smiley.json */; };
+		B307E25027003031004BBDD6 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = B307E24F27003031004BBDD6 /* loading.json */; };
+		B32679AA25B4BD6200220234 /* TwoLinesCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32679A925B4BD6200220234 /* TwoLinesCellView.swift */; };
 		B38572B225A7D60F009BC768 /* RestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38572B125A7D60F009BC768 /* RestHelper.swift */; };
 		B38572BB25A831BD009BC768 /* PaymentScheduleRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38572BA25A831BD009BC768 /* PaymentScheduleRow.swift */; };
 		B38572BE25A90134009BC768 /* TableSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B38572BD25A90134009BC768 /* TableSectionView.swift */; };
@@ -22,12 +26,13 @@
 		B399F6E42585941200EB529D /* RentalProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = B399F6E32585941200EB529D /* RentalProperty.swift */; };
 		B399F6E82585E1E000EB529D /* RoiAttributeRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = B399F6E72585E1E000EB529D /* RoiAttributeRow.swift */; };
 		B3F9E66B25AB65A900165C02 /* MortgageCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9E66A25AB65A900165C02 /* MortgageCalculator.swift */; };
-		B3F9E67725ABC75D00165C02 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = B3F9E67625ABC75D00165C02 /* Lottie */; };
 		B3F9E67A25ABC78100165C02 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F9E67925ABC78100165C02 /* LottieView.swift */; };
-		B3F9E6A425ABDFD300165C02 /* smiley.json in Resources */ = {isa = PBXBuildFile; fileRef = B3F9E6A325ABDFD300165C02 /* smiley.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B307E24D27002E48004BBDD6 /* smiley.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = smiley.json; sourceTree = "<group>"; };
+		B307E24F27003031004BBDD6 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
+		B32679A925B4BD6200220234 /* TwoLinesCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoLinesCellView.swift; sourceTree = "<group>"; };
 		B36FF8E825ABE9AE00CBD241 /* RentalROIMacApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RentalROIMacApp.swift; sourceTree = "<group>"; };
 		B38551AF25A967AD00BB3482 /* RentalROI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = RentalROI.entitlements; sourceTree = "<group>"; };
 		B38572B125A7D60F009BC768 /* RestHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestHelper.swift; sourceTree = "<group>"; };
@@ -48,7 +53,6 @@
 		B399F6E72585E1E000EB529D /* RoiAttributeRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoiAttributeRow.swift; sourceTree = "<group>"; };
 		B3F9E66A25AB65A900165C02 /* MortgageCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MortgageCalculator.swift; sourceTree = "<group>"; };
 		B3F9E67925ABC78100165C02 /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
-		B3F9E6A325ABDFD300165C02 /* smiley.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = smiley.json; path = ../../../../../Downloads/smiley.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,13 +60,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3F9E67725ABC75D00165C02 /* Lottie in Frameworks */,
+				B307E24A27002B8F004BBDD6 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B307E24827002B8F004BBDD6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B36FF8E725ABE9AE00CBD241 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -86,6 +97,7 @@
 				B399F6C42585926100EB529D /* RentalROI */,
 				B36FF8E725ABE9AE00CBD241 /* Shared */,
 				B399F6C32585926100EB529D /* Products */,
+				B307E24827002B8F004BBDD6 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -133,6 +145,7 @@
 				B38572BA25A831BD009BC768 /* PaymentScheduleRow.swift */,
 				B38572BD25A90134009BC768 /* TableSectionView.swift */,
 				B3F9E67925ABC78100165C02 /* LottieView.swift */,
+				B32679A925B4BD6200220234 /* TwoLinesCellView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,7 +162,8 @@
 		B3F9E67C25ABCA8000165C02 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				B3F9E6A325ABDFD300165C02 /* smiley.json */,
+				B307E24F27003031004BBDD6 /* loading.json */,
+				B307E24D27002E48004BBDD6 /* smiley.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -171,7 +185,7 @@
 			);
 			name = RentalROI;
 			packageProductDependencies = (
-				B3F9E67625ABC75D00165C02 /* Lottie */,
+				B307E24927002B8F004BBDD6 /* Lottie */,
 			);
 			productName = RentalROI;
 			productReference = B399F6C22585926100EB529D /* RentalROI.app */;
@@ -219,7 +233,8 @@
 			files = (
 				B399F6CD2585926200EB529D /* Preview Assets.xcassets in Resources */,
 				B399F6CA2585926200EB529D /* Assets.xcassets in Resources */,
-				B3F9E6A425ABDFD300165C02 /* smiley.json in Resources */,
+				B307E25027003031004BBDD6 /* loading.json in Resources */,
+				B307E24E27002E48004BBDD6 /* smiley.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -244,6 +259,7 @@
 				B3F9E67A25ABC78100165C02 /* LottieView.swift in Sources */,
 				B399F6D62585936200EB529D /* RentalPropertyView.swift in Sources */,
 				B399F6DD258593C800EB529D /* EditTextView.swift in Sources */,
+				B32679AA25B4BD6200220234 /* TwoLinesCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,7 +392,7 @@
 				CODE_SIGN_ENTITLEMENTS = RentalROI/RentalROI.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"RentalROI/Preview Content\"";
 				DEVELOPMENT_TEAM = 6LJPUMKE4E;
 				ENABLE_PREVIEWS = YES;
@@ -386,11 +402,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.liaollc.roirental;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "liaollc-dev";
 				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -404,7 +421,7 @@
 				CODE_SIGN_ENTITLEMENTS = RentalROI/RentalROI.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"RentalROI/Preview Content\"";
 				DEVELOPMENT_TEAM = 6LJPUMKE4E;
 				ENABLE_PREVIEWS = YES;
@@ -414,11 +431,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0;
+				MARKETING_VERSION = 2.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.liaollc.roirental;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = roirental;
 				SUPPORTS_MACCATALYST = YES;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -459,7 +477,7 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		B3F9E67625ABC75D00165C02 /* Lottie */ = {
+		B307E24927002B8F004BBDD6 /* Lottie */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = B3F9E67525ABC75D00165C02 /* XCRemoteSwiftPackageReference "lottie-ios" */;
 			productName = Lottie;

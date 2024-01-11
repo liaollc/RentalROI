@@ -8,16 +8,7 @@
 
 import Foundation
 
-// view model should be seperated from domain model
-public class RentalProperty: ObservableObject {
-    
-    static let sharedInstance: RentalProperty = {
-        let instance = RentalProperty()
-        // setup code
-        return instance
-    }()
-
-    
+public class AppViewModel: ObservableObject {
     @Published var purchasePrice: Double = 200000.0;
     @Published var loanAmt = 160000.0;
     @Published var interestRate = 5.0;
@@ -26,6 +17,43 @@ public class RentalProperty: ObservableObject {
     @Published var extra = 0.0;
     @Published var expenses = 0.0;
     @Published var rent = 0.0;
+    
+    static let sharedRentalProperty: RentalProperty = {
+        RentalProperty.sharedInstance
+    }()
+    
+    func saveAmortization<T:Encodable>(_ object: [T]) {
+        AppViewModel.sharedRentalProperty.saveAmortization(object)
+    }
+    
+    // viewModel.getSavedAmortization()
+    func getSavedAmortization() -> [PaymentScheduleDto]? {
+        return AppViewModel.sharedRentalProperty.getSavedAmortization()
+    }   
+    
+    // viewModel.save()
+    func save() {
+        AppViewModel.sharedRentalProperty.save()
+    }
+}
+
+// view model should be seperated from domain model
+public class RentalProperty: ObservableObject {
+    
+    static let sharedInstance: RentalProperty = {
+        let instance = RentalProperty()
+        // setup code
+        return instance
+    }()
+    
+    var purchasePrice: Double = 200000.0;
+    var loanAmt = 160000.0;
+    var interestRate = 5.0;
+    var numOfTerms = 30;
+    var escrow = 0.0;
+    var extra = 0.0;
+    var expenses = 0.0;
+    var rent = 0.0;
     
     var textNumOfTerms: String {
         get {

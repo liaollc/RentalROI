@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct MonthlyTermView: View {
-    @EnvironmentObject var rentalProperty: RentalProperty
+    @EnvironmentObject var viewModel: AppViewModel
     @State var payment: PaymentScheduleDto
 
     var body: some View {
@@ -30,16 +30,16 @@ struct MonthlyTermView: View {
             VStack {
                 // 2nd Investment Section
                 TableSectionView(title: "INVESTMENT")
-                RightDetailCellView(text: "Equity", detailText: p.equity(rentalProperty).toCurrencyString())
-                RightDetailCellView(text: "Down Pay & Extra", detailText: p.invested(rentalProperty).toCurrencyString())
+                RightDetailCellView(text: "Equity", detailText: p.equity(AppViewModel.sharedRentalProperty).toCurrencyString())
+                RightDetailCellView(text: "Down Pay & Extra", detailText: p.invested(AppViewModel.sharedRentalProperty).toCurrencyString())
                 
-                RightDetailCellView(text: "ROI", detailText: String(format: "%.2f%% (%@/mo)", p.roi(rentalProperty), p.net(rentalProperty).toCurrencyString()))
+                RightDetailCellView(text: "ROI", detailText: String(format: "%.2f%% (%@/mo)", p.roi(AppViewModel.sharedRentalProperty), p.net(AppViewModel.sharedRentalProperty).toCurrencyString()))
 
-                RightDetailCellView(text: "Cash Flow", detailText: String(format: "$%.2f/mo", p.cashFlow(rentalProperty)))
+                RightDetailCellView(text: "Cash Flow", detailText: String(format: "$%.2f/mo", p.cashFlow(AppViewModel.sharedRentalProperty)))
                 
-                RightDetailCellView(text: "Rent", detailText: String(format: "$%.2f/mo", rentalProperty.rent))
+                RightDetailCellView(text: "Rent", detailText: String(format: "$%.2f/mo", viewModel.rent))
 
-                RightDetailCellView(text: "Expense", detailText: String(format: "$%.2f/mo", rentalProperty.expenses))
+                RightDetailCellView(text: "Expense", detailText: String(format: "$%.2f/mo", viewModel.expenses))
             }
         }.navigationTitle("Payment")
     }    
@@ -60,10 +60,11 @@ struct MonthlyTermView_Previews: PreviewProvider {
         let p = RentalProperty.sharedInstance
         p.purchasePrice = 300000.0
         p.rent = 1800.0
+        p.expenses = 500.0
         return p
     }
     static var previews: some View {
-        MonthlyTermView(payment: payment).environmentObject(property)
+        MonthlyTermView(payment: payment).environmentObject(AppViewModel())
 //            .previewLayout(.fixed(width: 300, height: 70))
     }
 }

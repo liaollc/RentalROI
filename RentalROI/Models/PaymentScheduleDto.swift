@@ -41,39 +41,23 @@ struct PaymentScheduleDto: Codable, Identifiable {
         
         return roi * 100
     }
+    func roc(_ property: RentalProperty) -> Double {
+        let invested = self.invested(property)
+        let cash = self.cashFlow(property)
+        let roc = cash * 12 / invested
+        
+        return roc * 100
+    }
     func equity(_ property: RentalProperty) -> Double {
         let equity = property.purchasePrice - balance0 + principal
         return equity
     }
-    
+    func roe(_ property: RentalProperty) -> Double {
+        let net = self.net(property)
+        let roe = net * 12 / equity(property)
+        return roe * 100
+    }
     var remainingBalance: Double {
        return balance0 - principal - extra
     }
-
-//    override func viewDidLoad() {
-//      super.viewDidLoad()
-//      let principal = self.monthlyTerm["principal"] as! Double
-//      let interest = self.monthlyTerm["interest"] as! Double
-//      let escrow = self.monthlyTerm["escrow"] as! Double
-//      let extra = self.monthlyTerm["extra"] as! Double
-//      let balance = (self.monthlyTerm["balance0"] as! Double) - principal
-//      let paymentPeriod = self.monthlyTerm["pmtNo"] as! Int
-//      let totalPmt = principal + interest + escrow + extra
-//      self.mTotalPmt.text = String(format: "$%.2f", totalPmt)
-//      self.mPaymentNo.text = String(format: "No. %d", paymentPeriod)
-//      self.mPrincipal.text = String(format: "$%.2f", principal)
-//      self.mInterest.text = String(format: "$%.2f", interest)
-//      self.mEscrow.text = String(format: "$%.2f", escrow)
-//      self.mAddlPmt.text = String(format: "$%.2f", extra)
-//      self.mBalance.text = String(format: "$%.2f", balance)
-//
-//      let property = RentalProperty.sharedInstance;
-//      let invested = property.getPurchasePrice() - property.getLoanAmt() + (property.getExtra() * Double(paymentPeriod))
-//      let net = property.getRent() - escrow - interest - property.getExpenses();
-//      let roi = net * 12 / invested
-//
-//      self.mEquity.text = String(format: "$%.2f", property.getPurchasePrice() - balance)
-//      self.mCashInvested.text = String(format: "$%.2f", invested)
-//      self.mRoi.text = String(format: "%.2f%% ($%.2f/mo)", roi * 100, net)
-//    }
 }

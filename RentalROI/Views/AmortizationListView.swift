@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AmortizationListView: View {
-    @EnvironmentObject var rentalProperty: RentalProperty    
+    @EnvironmentObject var rentalProperty: AppViewModel    
     @Binding var payments: [PaymentScheduleDto]
 
     var body: some View {
@@ -30,6 +30,6 @@ struct AmortizationView_Previews: PreviewProvider {
     @State static var payments: [PaymentScheduleDto] = []
     
     static var previews: some View {
-        AmortizationListView(payments: $payments).environmentObject(RentalProperty.sharedInstance)
+        AmortizationListView(payments: $payments).environmentObject(AppViewModel())
     }
 }

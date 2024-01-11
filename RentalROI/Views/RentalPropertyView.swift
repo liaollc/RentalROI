@@ -1,5 +1,5 @@
 //
-//  RentalPropertyView.swift
+//  viewModelView.swift
 //  RentalROI
 //
 //  Created by Sean Liao on 12/12/20.
@@ -7,8 +7,14 @@
 
 import SwiftUI
 
+public class RentalPropertyViewModel: ObservableObject {
+    
+
+}
+
+
 struct RentalPropertyView: View {
-    @EnvironmentObject var rentalProperty: RentalProperty
+    @EnvironmentObject var appViewModel: AppViewModel
     
     @State var showingEditView: Bool = false
     @State var attrToEdit: RoiAttribute = RoiAttribute.na
@@ -23,30 +29,38 @@ struct RentalPropertyView: View {
     init() {
     }
     
+    private func test() {
+        print("\(payments)")
+    }
+
     var body: some View {
         let downPaymentBinding = Binding(
             get: {
-                (rentalProperty.purchasePrice - rentalProperty.loanAmt) * 100.0/rentalProperty.purchasePrice
+                (appViewModel.purchasePrice - appViewModel.loanAmt) * 100.0/appViewModel.purchasePrice
             },
             set: { newValue in
-                rentalProperty.loanAmt = rentalProperty.purchasePrice * (1.0 - newValue/100.0)
+                appViewModel.loanAmt = appViewModel.purchasePrice * (1.0 - newValue/100.0)
             }
         )
         let numOfTermsBinding = Binding(
-            get: { Double(rentalProperty.numOfTerms)},
-            set: { rentalProperty.numOfTerms = Int($0) }
+            get: { Double(appViewModel.numOfTerms)},
+            set: { appViewModel.numOfTerms = Int($0) }
         )
         
         NavigationView {
             ScrollView {
                 if showProgressBar {
-                    LottieView(name: "smiley")
-                                    .frame(width:100, height:100)
+                    LottieView(name: "loading").frame(width:100, height:100)
                 }
                 
                 VStack {
                     TableSectionView(title: "MORTGAGE")
-                    RoiAttributeRow(attribute: RoiAttribute.purchasePrice, value: $rentalProperty.purchasePrice, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
+                    
+                    let vm = RoiAttributeRowViewModel(name: RoiAttribute.purchasePrice.name, value: appViewModel.purchasePrice)
+                    RoiAttributeRow2(viewModel: vm)
+                    
+                    
+                    RoiAttributeRow(attribute: RoiAttribute.purchasePrice, value: $appViewModel.purchasePrice, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     
                     VStack(alignment: .leading) {
                         HStack {
@@ -56,7 +70,7 @@ struct RentalPropertyView: View {
                         HStack {
                             Slider(value: downPaymentBinding, in: 0...100, step: 1)
                             Spacer()
-                            Text("\(rentalProperty.purchasePrice - rentalProperty.loanAmt, specifier: "$%.0f")").font(.caption).foregroundColor(.secondary)
+                            Text("\(appViewModel.purchasePrice - appViewModel.loanAmt, specifier: "$%.0f")").font(.caption).foregroundColor(.secondary)
                             Text("\(downPaymentBinding.wrappedValue, specifier: "%.1f")%")
                                 .foregroundColor(.blue)
                                 .gesture(TapGesture().onEnded({ isOk in
@@ -64,6 +78,7 @@ struct RentalPropertyView: View {
                                     attrToEdit = RoiAttribute.downPayment
                                 }))
                             Button(action: {
+                                test()
                                 showingEditView = true
                                 attrToEdit = RoiAttribute.downPayment
                             }, label: {
@@ -75,17 +90,17 @@ struct RentalPropertyView: View {
                     }
                     .padding(.top, -8).padding(.leading, 16).padding(.trailing, 16).padding(.bottom, -8)
                     
-                    RoiAttributeRow(attribute: RoiAttribute.loanAmt, value: $rentalProperty.loanAmt, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
-                    RoiAttributeRow(prefix: "", postfix: "%%", attribute: RoiAttribute.interestRate, value: $rentalProperty.interestRate, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
+                    RoiAttributeRow(attribute: RoiAttribute.loanAmt, value: $appViewModel.loanAmt, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
+                    RoiAttributeRow(prefix: "", postfix: "%%", attribute: RoiAttribute.interestRate, value: $appViewModel.interestRate, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     RoiAttributeRow(prefix: "", postfix: " yr.", isInt: true, attribute: RoiAttribute.numOfTerms, value: numOfTermsBinding, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
-                    RoiAttributeRow(attribute: RoiAttribute.escrow, value: $rentalProperty.escrow, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
-                    RoiAttributeRow(attribute: RoiAttribute.extra, value: $rentalProperty.extra, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
+                    RoiAttributeRow(attribute: RoiAttribute.escrow, value: $appViewModel.escrow, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
+                    RoiAttributeRow(attribute: RoiAttribute.extra, value: $appViewModel.extra, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                 }
                 
                 VStack {
                     TableSectionView(title: "OPERATIONS")
-                    RoiAttributeRow(attribute: RoiAttribute.expenses, value: $rentalProperty.expenses, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
-                    RoiAttributeRow(attribute: RoiAttribute.rent, value: $rentalProperty.rent, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
+                    RoiAttributeRow(attribute: RoiAttribute.expenses, value: $appViewModel.expenses, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
+                    RoiAttributeRow(attribute: RoiAttribute.rent, value: $appViewModel.rent, attrToEdit: $attrToEdit, showingEditView: $showingEditView)
                     
                 }.padding(.bottom, 60)
                 
@@ -103,10 +118,10 @@ struct RentalPropertyView: View {
             }
             .navigationBarTitle("Property", displayMode: .large)
             .navigationBarItems(trailing: Button(action: {
-                rentalProperty.save()
+                appViewModel.save()
                 
                 showProgressBar = true
-                if let p = rentalProperty.getSavedAmortization() {
+                if let p = appViewModel.getSavedAmortization() {
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         showProgressBar = false
                         payments = p
@@ -114,18 +129,18 @@ struct RentalPropertyView: View {
                     }
                 } else {
                     let request = GetAmortizationRequest(
-                        amount: rentalProperty.loanAmt,
-                        rate: rentalProperty.interestRate,
-                        terms: rentalProperty.numOfTerms,
-                        escrow: rentalProperty.escrow,
-                        extra: rentalProperty.extra)
+                        amount: appViewModel.loanAmt,
+                        rate: appViewModel.interestRate,
+                        terms: appViewModel.numOfTerms,
+                        escrow: appViewModel.escrow,
+                        extra: appViewModel.extra)
                     
                     if useApi {
                         RestHelper.getAmortization(request) { (dto, data) in
                             showProgressBar = false
                             if let p = dto {
                                 payments = p
-                                rentalProperty.saveAmortization(p)
+                                appViewModel.saveAmortization(p)
                                 toAmortizationView = true
                             } else {
                                 // error ?
@@ -138,7 +153,7 @@ struct RentalPropertyView: View {
                             showProgressBar = false
                             let p = MortgageCalculator.sharedInstance.calcPayments()
                             payments = p
-                            rentalProperty.saveAmortization(p)
+                            appViewModel.saveAmortization(p)
                             toAmortizationView = true
                         }
                     }
@@ -156,8 +171,8 @@ struct RentalPropertyView: View {
 struct RentalPropertyView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            RentalPropertyView().environmentObject(RentalProperty.sharedInstance).environment(\.colorScheme, .light)
-            RentalPropertyView().environmentObject(RentalProperty.sharedInstance).environment(\.colorScheme, .dark)
+            RentalPropertyView().environmentObject(AppViewModel()).environment(\.colorScheme, .light)
+            RentalPropertyView().environmentObject(AppViewModel()).environment(\.colorScheme, .dark)
         }
     }
 }
